@@ -42,9 +42,9 @@ public class MovieService {
     public void deletedirector(String director){
         movierepository.deletedirectorfromDB(director);
     }
-//    public void removealldirector(){
-//        movierepository.deletealldirectorinDB();
-//
-//    }
+    public void removealldirector(){
+        movierepository.deletealldirectorinDB();
+
+    }
 
 }
