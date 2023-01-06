@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MovieRepository {
 
-    HashMap<String,Movie> movieDB = new HashMap<>();
-    HashMap<String,Director> directorDB = new HashMap<>();
-    HashMap<String,List<Movie>> movieDirectorDB = new HashMap<>();
+    public HashMap<String,Movie> movieDB = new HashMap<>();
+    public HashMap<String,Director> directorDB = new HashMap<>();
+    public HashMap<String,List<String>> movieDirectorDB = new HashMap<>();
 
     public void addmovieinDB(Movie movie){
         movieDB.put(movie.getName(),movie);
@@ -16,51 +16,64 @@ public class MovieRepository {
     public void adddirectorinDB(Director director){
         directorDB.put(director.getName(),director);
     }
-    public void adddirectorMovieInDB(Director director,Movie movie){
-        List<Movie> movies = movieDirectorDB.getOrDefault(director.getName(),new ArrayList<>());
-        movies.add(movie);
-        movieDirectorDB.put(director.getName(),movies);
+    public void adddirectorMovieInDB(String director,String movie){
+       if(movieDB.containsKey(movie)  &&  directorDB.containsKey(director)){
+           List<String> movies = new ArrayList<>();
+           if(movieDirectorDB.containsKey(director)){
+               movies = movieDirectorDB.get(director);
+           }
+           movies.add(movie);
+           movieDirectorDB.put(director,movies);
+       }
     }
-    public Movie getMovieFromDB(Movie movie){
-        Movie movied = movieDB.get(movie.getName());
-        return movied;
+    public Movie getMovieFromDB(String movie){
+        return movieDB.get(movie);
     }
-    public Director getdirectorFromDB(Director director){
-        Director directo = directorDB.get(director.getName());
-        return directo;
+    public Director getdirectorFromDB(String director){
+        return directorDB.get(director);
     }
-    public List<Movie> getmoviesbyDirectorINDB(Director director){
-        List<Movie> moviesL = movieDirectorDB.get(director.getName());
+
+    public List<String> getmoviesbyDirectorINDB(String director){
+        List<String> moviesL = movieDirectorDB.get(director);
         return moviesL;
     }
     public List<String> getallmoviesinDB(){
-        List<String> ans = new ArrayList<>();
-        for(String s : movieDB.keySet()){
-            ans.add(s);
-        }
-        return ans;
+       return new ArrayList<>(movieDB.keySet());
     }
 
-    public void deletedirectorfromDB(Director director){
-      List<Movie> movies = movieDirectorDB.get(director.getName());
-      for(Movie m : movies){
-          if(movieDB.containsKey(m.getName())){
-              movieDB.remove(m.getName());
+    public void deletedirectorfromDB(String director){
+      List<String> movies = new ArrayList<>();
+      if(movieDirectorDB.containsKey(director)){
+          movies = movieDirectorDB.get(director);
+          for(String movie : movies){
+              if(movieDB.containsKey(movie)){
+                  movieDB.remove(movie);
+              }
           }
-          movieDirectorDB.remove(director.getName());
+      }
+      movieDirectorDB.remove(director);
+      if(directorDB.containsKey(director)){
+          directorDB.remove(director);
       }
     }
 
     public void deletealldirectorinDB(){
-        for(String m: movieDirectorDB.keySet()){
-            List<Movie> movie = movieDirectorDB.get(m);
-            for(Movie s : movie) {
-                if (movieDB.containsKey(s.getName())) {
-                    movieDB.remove(s.getName());
-                }
+        HashSet<String> fullmovielist = new HashSet<String>();
+
+        directorDB = new HashMap<>();
+        for(String director : movieDirectorDB.keySet()){
+            for(String movie : movieDirectorDB.get(director)){
+                fullmovielist.add(movie);
             }
         }
-        movieDirectorDB.clear();
+        for(String movie : fullmovielist) {
+            if (movieDB.containsKey(movie)) {
+                movieDB.remove(movie);
+            }
+        }
+        //clearing the pair
+        movieDirectorDB = new HashMap<>();
+
     }
 
 
