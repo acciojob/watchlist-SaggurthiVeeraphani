@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("movies")
 public class MovieController {
 
     @Autowired
@@ -43,8 +44,8 @@ public class MovieController {
 
     //get Director by name
     @GetMapping("/get-director-by-name/{name}")
-    public ResponseEntity<Director> getDirectorByName(@PathVariable String director){
-        Director direct = movieservice.getdirectorbyname(director);
+    public ResponseEntity<Director> getDirectorByName(@PathVariable String name){
+        Director direct = movieservice.getdirectorbyname(name);
         return new ResponseEntity<>(direct,HttpStatus.CREATED);
     }
 

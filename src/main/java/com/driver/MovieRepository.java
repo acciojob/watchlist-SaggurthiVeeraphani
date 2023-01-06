@@ -6,11 +6,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MovieRepository {
 
-    public HashMap<String,Movie> movieDB = new HashMap<>();
-    public HashMap<String,Director> directorDB = new HashMap<>();
-    public HashMap<String,List<String>> movieDirectorDB = new HashMap<>();
+    private HashMap<String,Movie> movieDB;
+    private HashMap<String,Director> directorDB ;
+    private HashMap<String,List<String>> movieDirectorDB;
+
+    //initialization
+    public MovieRepository(){
+        this.movieDB = new HashMap<String,Movie>();
+        this.directorDB = new HashMap<String,Director>();
+        this.movieDirectorDB = new HashMap<String,List<String>>();
+    }
 
     public void addmovieinDB(Movie movie){
+
         movieDB.put(movie.getName(),movie);
     }
     public void adddirectorinDB(Director director){
@@ -34,7 +42,10 @@ public class MovieRepository {
     }
 
     public List<String> getmoviesbyDirectorINDB(String director){
-        List<String> moviesL = movieDirectorDB.get(director);
+        List<String> moviesL = new ArrayList<>();
+        if(movieDirectorDB.containsKey(director)){
+            moviesL = movieDirectorDB.get(director);
+        }
         return moviesL;
     }
     public List<String> getallmoviesinDB(){

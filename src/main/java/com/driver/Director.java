@@ -22,6 +22,7 @@ public class Director {
 
     //getter and setter
     public String getName() {
+
         return name;
     }
 
@@ -30,6 +31,7 @@ public class Director {
     }
 
     public int getNumberOfMovies() {
+
         return numberOfMovies;
     }
 
@@ -42,6 +44,7 @@ public class Director {
     }
 
     public void setImdbRating(double imdbRating) {
+
         this.imdbRating = imdbRating;
     }
 }
