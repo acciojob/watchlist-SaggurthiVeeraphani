@@ -78,5 +78,15 @@ public class MovieController {
         return new ResponseEntity<>("All directors deleted successfully", HttpStatus.CREATED);
     }
 
+    //Mock test --month 1 ---spring boot--------------------Accio Jobs
+    //Print director name with movie name
+    //if director is not present print a message
+    @GetMapping("/get-director-name-By-movie-name/{name}")
+    public ResponseEntity<String> getDirectorbyMovieName(@PathVariable String movie){
+        String director = movieService.getdirectorBYmovieName(movie);
+        return new ResponseEntity<>(director,HttpStatus.CREATED);
+    }
+
+
 
 }

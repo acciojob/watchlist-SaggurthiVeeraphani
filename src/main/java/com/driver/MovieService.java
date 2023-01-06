@@ -44,4 +44,14 @@ public class MovieService {
     {
         movieRepository.deleteAllDirector();
     }
+
+
+    //Mock test --month 1 ---spring boot--------------------Accio Jobs
+    //Print director name with movie name
+    //if director is not present print a message
+
+    public String getdirectorBYmovieName(String movie){
+        String director = movieRepository.getdirectorbymovieINDB(movie);
+        return director;
+    }
 }

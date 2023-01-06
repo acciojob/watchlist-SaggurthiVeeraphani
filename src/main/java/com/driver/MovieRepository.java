@@ -109,4 +109,28 @@ public class MovieRepository {
     }
 
 
+
+    //Mock test --month 1 ---spring boot--------------------Accio Jobs
+    //Print director name with movie name
+    //if director is not present print a message
+    public String getdirectorbymovieINDB(String movie){
+        boolean directorinDB = false;
+        String ans = "";
+        for(String director: directorMovieDb.keySet()){
+            List<String> a = directorMovieDb.get(director);
+            for(String name : a){
+               if(name == movie){
+                   directorinDB = true;
+                   ans = ans+director;
+               }
+            }
+        }
+        if(directorinDB==true){
+            return ans;
+        }
+        else
+            return "NO Director found with given movie name";
+    }
+
+
 }
