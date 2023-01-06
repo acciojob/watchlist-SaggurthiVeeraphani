@@ -69,26 +69,20 @@ public class MovieRepository {
     }
 
     public void deletealldirectorinDB(){
-        HashSet<String> fullmovielist = new HashSet<String>();
+
 
         directorDB = new HashMap<>();
         for(String director : movieDirectorDB.keySet()){
-            for(String movie : movieDirectorDB.get(director)){
-                fullmovielist.add(movie);
+            List<String> a = movieDirectorDB.get(director);
+            for(String ans : a){
+                if(movieDB.containsKey(ans)){
+                    movieDB.remove(ans);
+                }
             }
         }
-        for(String movie : fullmovielist) {
-            if (movieDB.containsKey(movie)) {
-                movieDB.remove(movie);
-            }
-        }
+
         //clearing the pair
         movieDirectorDB = new HashMap<>();
 
     }
-
-
-
-
-
 }
